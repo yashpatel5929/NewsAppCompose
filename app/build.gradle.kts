@@ -32,6 +32,15 @@ android {
                 "proguard-rules.pro"
             )
         }
+        getByName("debug") {
+            buildConfigField("String", "BASE_URL", "\"https://api.thenewsapi.com/v1/news/\"")
+            buildConfigField("String" , "ACCESS_TOKEN" , "\"QqjBl6z8cQtTqRW36WHgtob05LkA2x6EcoKIqSjV\"")
+        }
+
+        getByName("release") {
+            buildConfigField("String", "BASE_URL", "\"https://api.thenewsapi.com/v1/news/\"")
+            buildConfigField("String" , "ACCESS_TOKEN" , "\"QqjBl6z8cQtTqRW36WHgtob05LkA2x6EcoKIqSjV\"")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -42,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -79,4 +89,7 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("androidx.activity:activity-ktx:1.9.0")
 }

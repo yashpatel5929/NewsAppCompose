@@ -1,9 +1,11 @@
 package com.example.newsapp.presentation.ui.onboarding
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,6 +16,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,12 +32,12 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun OnBoardingScreen(
     viewModel : OnBoardingViewModel,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     navigateToDashBoard : () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxSize()) {
 
         LaunchedEffect(key1 = Unit){
             viewModel.effect.collectLatest {
@@ -76,7 +80,7 @@ fun OnBoardingPagerScreen(
             modifier = modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.6f),
-            painter = painterResource(id = page.image), contentDescription = null
+            painter = painterResource(id = page.image), contentDescription = null, contentScale = ContentScale.FillBounds
         )
         Spacer(modifier = modifier.height(10.dp))
         Text( modifier = modifier

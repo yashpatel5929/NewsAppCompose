@@ -9,4 +9,19 @@
     <string name="back">back</string>
     <string name="publish_on">Publish on :- %s</string>
     <string name="author">Author : %s</string>
+    <string name="latest_news">Latest News</string>
+    <string name="categories">Categories</string>
+    <string name="category_sports">Sports</string>
+    <string name="category_entertainment">Entertainment</string>
+    <string name="category_technology">Technology</string>
+    <string name="category_health">Health</string>
+    <string name="category_business">Business</string>
+    <string name="category_science">Science</string>
+    <string name="category_world">World</string>
+    <string name="category_politics">Politics</string>
+    <string name="category_travel">Travel</string>
+    <string name="category_food">Food</string>
+    <string name="category_lifestyle">Lifestyle</string>
+    <string name="error_something_went_wrong">Something went wrong</string>
+    <string name="error_no_internet_connection">No internet connection</string>
 </resources>

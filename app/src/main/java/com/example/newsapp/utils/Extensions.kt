@@ -3,6 +3,8 @@ package com.example.newsapp.utils
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.PagerState
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -18,4 +20,9 @@ fun String.toDate(): String {
         Log.d("TAG", "toDate: ${e.message}")
     }
     return this
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+fun PagerState.calculateCurrentOffsetForPage(page: Int): Float {
+    return (currentPage - page) + currentPageOffsetFraction
 }

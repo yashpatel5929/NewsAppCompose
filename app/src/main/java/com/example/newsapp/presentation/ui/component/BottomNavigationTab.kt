@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,21 +37,38 @@ fun BottomNavigationTab(
     currentScreen: NewsAppDestination,
     tabItemClick: (String) -> Unit
 ) {
+    NavigationBar(modifier = modifier.clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp)) , containerColor = MaterialTheme.colorScheme.surfaceVariant) {
+        bottomTabDataList.forEach {
+            NavigationBarItem(selected = currentScreen.route == it.navigateTo, onClick = { tabItemClick.invoke(it.navigateTo)}, icon = { Icon(
+                painter = painterResource(id = it.image),
+                contentDescription = it.tabName
+            ) } ,label = {
+                Text(it.tabName)
+            })
+        }
+    }
 
-    Row (modifier.padding(bottom = 25.dp , start = 20.dp , end = 20.dp).clip(shape = RoundedCornerShape(50.dp)).background(color = Color.White).fillMaxWidth() , verticalAlignment = Alignment.Bottom , horizontalArrangement = Arrangement.SpaceBetween) {
+   /* Row (
+        modifier
+            .padding(bottom = 25.dp, start = 20.dp, end = 20.dp)
+            .clip(shape = RoundedCornerShape(50.dp))
+            .background(color = Color.White)
+            .fillMaxWidth() , verticalAlignment = Alignment.Bottom , horizontalArrangement = Arrangement.SpaceBetween) {
         bottomTabDataList.forEach {
             TabLayout(tabIcon = it.image , tabTitle = it.tabName , route = it.navigateTo , isSelected = currentScreen.route == it.navigateTo ) {
                 tabItemClick(it)
             }
         }
-    }
+    }*/
 }
 
 @Composable
 fun TabLayout(modifier: Modifier = Modifier , @DrawableRes tabIcon : Int , tabTitle : String , route : String , isSelected : Boolean, itemClick : (String) -> Unit) {
-    Column(modifier = modifier.padding(15.dp).clickable {
-          itemClick(route)
-    } , horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier
+        .padding(15.dp)
+        .clickable {
+            itemClick(route)
+        } , horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(painter = painterResource(id = tabIcon), contentDescription = null , tint = if(isSelected) MaterialTheme.colorScheme.primary else Color.Black)
         Text(text = tabTitle , style = MaterialTheme.typography.titleSmall , color = if(isSelected)  MaterialTheme.colorScheme.primary else Color.Black)
     }

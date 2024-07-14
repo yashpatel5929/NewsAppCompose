@@ -59,7 +59,6 @@ fun SetUpNavigation(
             if(currentDestination?.route != OnBoarding.route) {
                 BottomNavigationTab(
                     modifier = Modifier
-                        .navigationBarsPadding()
                         .background(MaterialTheme.colorScheme.background), bottomTabDataList = bottomTabData,
                     currentScreen = currentScreens
                 ) {
@@ -71,7 +70,7 @@ fun SetUpNavigation(
 
         NavHost(
             navController = navController, startDestination = OnBoarding.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding()
         ) {
 
 
@@ -79,7 +78,7 @@ fun SetUpNavigation(
                 route = OnBoarding.route
             ) {
                 val viewModel = hiltViewModel<OnBoardingViewModel>()
-                OnBoardingScreen(viewModel = viewModel, modifier = Modifier) {
+                OnBoardingScreen(viewModel = viewModel) {
                     navController.navigate(HomeScreen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             inclusive = true

@@ -1,10 +1,9 @@
 package com.example.newsapp.navigation
 
-import android.opengl.Visibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -12,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,7 +20,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.newsapp.R
-import com.example.newsapp.component.TopBar
 import com.example.newsapp.domain.model.BottomNavData
 import com.example.newsapp.presentation.ui.component.BottomNavigationTab
 import com.example.newsapp.presentation.ui.home.HomeScreen
@@ -30,6 +27,7 @@ import com.example.newsapp.presentation.ui.home.HomeScreenViewModel
 import com.example.newsapp.presentation.ui.onboarding.OnBoardingScreen
 import com.example.newsapp.presentation.ui.onboarding.OnBoardingViewModel
 import com.example.newsapp.presentation.ui.search.SearchScreen
+import com.example.newsapp.presentation.ui.search.SearchScreenViewModel
 import com.example.newsapp.presentation.ui.trending.TrendingScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,6 +52,7 @@ fun SetUpNavigation(
     )
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0.dp),
         modifier = Modifier.background(Color.Transparent),
         bottomBar = {
             if(currentDestination?.route != OnBoarding.route) {
@@ -67,46 +66,48 @@ fun SetUpNavigation(
             }
         }
     ) { innerPadding ->
-
-        NavHost(
-            navController = navController, startDestination = OnBoarding.route,
-            modifier = Modifier.padding()
-        ) {
-
-
-            composable(
-                route = OnBoarding.route
+        Box(modifier = Modifier.padding(innerPadding)) {
+            NavHost(
+                navController = navController, startDestination = OnBoarding.route,
+                modifier = Modifier.padding()
             ) {
-                val viewModel = hiltViewModel<OnBoardingViewModel>()
-                OnBoardingScreen(viewModel = viewModel) {
-                    navController.navigate(HomeScreen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            inclusive = true
+
+
+                composable(
+                    route = OnBoarding.route
+                ) {
+                    val viewModel = hiltViewModel<OnBoardingViewModel>()
+                    OnBoardingScreen(viewModel = viewModel) {
+                        navController.navigate(HomeScreen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                inclusive = true
+                            }
                         }
                     }
                 }
-            }
 
-            composable(
-                route = HomeScreen.route
-            ) {
-                val viewModel = hiltViewModel<HomeScreenViewModel>()
-                HomeScreen(viewModel = viewModel)
-            }
+                composable(
+                    route = HomeScreen.route
+                ) {
+                    val viewModel = hiltViewModel<HomeScreenViewModel>()
+                    HomeScreen(viewModel = viewModel)
+                }
 
-            composable(
-                route = TrendingScreen.route
-            ) {
-                TrendingScreen()
-            }
+                composable(
+                    route = TrendingScreen.route
+                ) {
+                    TrendingScreen()
+                }
 
-            composable(
-                route = SearchScreen.route
-            ) {
-                SearchScreen()
-            }
-            /*  homeScreenGraph(navController)
+                composable(
+                    route = SearchScreen.route
+                ) {
+                    val searchScreensViewModel = hiltViewModel<SearchScreenViewModel>()
+                    SearchScreen(searchScreensViewModel)
+                }
+                /*  homeScreenGraph(navController)
               bookMarkGraph(navController)*/
+            }
         }
 
     }
